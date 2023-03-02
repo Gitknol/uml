@@ -7,11 +7,13 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
 # read data
 
-df=pd.read_csv('D:/uml/python/数据/Data.csv')
-X=df.iloc[:,:-1].values
-y = df.iloc[:, 3].values
-imputer = SimpleImputer(missing_values= np.nan, strategy="mean")
-imputer = imputer.fit(X[:,1:3])
-X[:,1:3] = imputer.transform(X[:,1:3])
-print(X)
+df=pd.read_csv('D:/uml/python/数据/DTW_prec.csv',header= 'infer')
+#空数据删除
+df.dropna(inplace=True)
+#数据转化
+df.index = pd.to_datetime(df['DATE'])
+df=df['PRCP']
+ax=df.plot(kind= 'line',figsize=(15,3))
+ax.set_title('Daily Precipitation (variance = %.4f)' % (df.var()))
+plt.show()
 
